@@ -6,49 +6,29 @@ using System.Threading.Tasks;
 
 namespace Sample2
 {
-    public class Bar
-    {
-        ~Bar()
-        {
-            Console.WriteLine("dtor ~Bar()");
-        }
-    }
-
-    public class Foo
-    {
-        private Bar _bar;
-        public Bar Bar
-        {
-            get { return this._bar; }
-        }
-
-
-        public Foo(Bar bar)
-        {
-            this._bar = bar;
-        }
-
-        ~Foo()
-        {
-            Console.WriteLine("dtor ~Foo()");
-        }
-    }
-
     class Program
     {
         static void Main(string[] args)
         {
-            var bar = new Bar();
-            var foo = new Foo(bar);
+            var actions = new List<Action>();
 
-            var bar2 = foo.Bar;
+            for(int i = 0; i < 10; i++)
+            {
+                var copy = i;
+                Action action = () =>
+                {
+                    Console.WriteLine(copy);
+                };
 
-            bar = null;
-            foo = null;
-            GC.Collect();
+                actions.Add(action);
+            }
+
+            foreach(var action in actions)
+            {
+                action();
+            }
 
             Console.ReadKey();
-
         }
     }
 }
