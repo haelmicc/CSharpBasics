@@ -1,38 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-//using Moq;
 
 namespace Sample1
 {
-    class Foo
-    {
-        public void Bar(Action<int> action)
-        {
-            action.Invoke(4);
-        }
-    }
-
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            Console.WriteLine("Hello world");
+            var ints = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }.ToList();
 
-            var foo = new Foo();
+            var result = ints.Select(i => new { Item = i, Index = ints.IndexOf(i) })
+                             .GroupBy(dummy => dummy.Index / 3, dummy => dummy.Item);
 
-            foo.Bar( Test );
-            foo.Bar( i => { Console.WriteLine(i); });
+            foreach(var group in result)
+            {
+                foreach(var item in group)
+                {
+                    Console.Write(item + " ");
+                }
+                Console.WriteLine();
+            }
 
-            Console.ReadKey();
-        }
-
-        static void Test(int i)
-        {
-            Console.WriteLine(i);
+            Console.ReadKey(); 
         }
     }
 }
