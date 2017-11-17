@@ -7,9 +7,11 @@ namespace Sample1
     {
         public static void Main(string[] args)
         {
-            var ints = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }.ToList();
+            // var ints = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }.ToList();
 
-            var result = ints.Select(i => new { Item = i, Index = ints.IndexOf(i) })
+            var items = new[] { "A", "B", "C", "D", "E", "F", "G", "H" }.ToList();
+
+            var result = items.Select(i => new { Item = i, Index = items.IndexOf(i) })
                              .GroupBy(dummy => dummy.Index / 3, dummy => dummy.Item);
 
             foreach(var group in result)
